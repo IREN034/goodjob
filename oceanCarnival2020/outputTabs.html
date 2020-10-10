@@ -3,12 +3,39 @@
 
 <head>
     <style>
-        td{
-            background: #e5e5e5;
+        table {
+            width: 1024px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
         }
-        .td{
-            padding: 6px 10px;
-            background: #ffffff;
+
+        tr:first-child {
+            background: #03a9f4;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #efefef;
+        }
+
+        td {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .btnInput{
+            width: calc(100% / 3.5);
+            margin: 5px;
+        }
+        .slideMenus{
+            @media screen and (max-width:600px){
+                height: 55px;
+            overflow: hidden;
+            }
+        }
+        .slideMenu{
+            display: flex;
+            height: 70px;
+            overflow-y: auto;
         }
     </style>
     <meta charset="utf-8">
@@ -18,36 +45,47 @@
 </head>
 
 <body>
-    <input type="button" value="海水彙整" onClick="aaa('海水彙整', 21)">
-    <!-- <input type="button" value="工作表2" onClick="aaa('工作表2', 2)"> -->
-
+<div class="slideMenus">
+    <div class="slideMenu">
+        <input type="button" value="1號箱豚缸" onClick="onchangeTabfish('1號箱豚缸', 1)" class="btnInput">
+        <input type="button" value="2號石狗公" onClick="onchangeTabfish('2號石狗公', 2" class="btnInput">
+        <input type="button" value="3號兩性缸" onClick="onchangeTabfish('3號兩性缸', 3)" class="btnInput">
+        <input type="button" value="4號大花枝" onClick="onchangeTabfish('4號大花枝', 4)" class="btnInput">
+        <input type="button" value="5號裸胸鯙" onClick="onchangeTabfish('5號裸胸鯙', 5)" class="btnInput">
+    
+        
+        <input type="button" value="6號蝦虎缸" onClick="onchangeTabfish('6號蝦虎缸', 6)" class="btnInput">
+        <input type="button" value="7號鱟缸" onClick="onchangeTabfish('7號鱟缸', 7)" class="btnInput">
+        <input type="button" value="8號花園鰻" onClick="onchangeTabfish('8號花園鰻', 8)" class="btnInput">
+        <input type="button" value="9號軟體缸" onClick="onchangeTabfish('9號軟體缸', 9)" class="btnInput">
+        <input type="button" value="10號硬體缸" onClick="onchangeTabfish('10號硬體缸', 10)" class="btnInput">
+        
+        <input type="button" value="11號石斑缸" onClick="onchangeTabfish('11號石斑缸', 11)" class="btnInput">
+        <input type="button" value="12號小花枝" onClick="onchangeTabfish('12號小花枝', 12)" class="btnInput">
+        <input type="button" value="13號海馬" onClick="onchangeTabfish('13號海馬', 13)" class="btnInput">
+        <input type="button" value="14號眼斑雙鋸" onClick="onchangeTabfish('14號眼斑雙鋸', 14)" class="btnInput">
+        <input type="button" value="15號畢卡索" onClick="onchangeTabfish('15號畢卡索', 15)" class="btnInput">
+        
+        <input type="button" value="16號太平洋雙鋸" onClick="onchangeTabfish('16號太平洋雙鋸', 16)" class="btnInput">
+        <input type="button" value="17號白金小丑" onClick="onchangeTabfish('17號:白金小丑', 17)" class="btnInput">
+        <input type="button" value="18號多莉" onClick="onchangeTabfish('18號多莉', 18)" class="btnInput">
+        <input type="button" value="19號神仙魚" onClick="onchangeTabfish('19號神仙魚', 19)" class="btnInput">
+        <input type="button" value="20號魟魚缸" onClick="onchangeTabfish('20號魟魚缸', 20)" class="btnInput">
+    
+        <input type="button" value="海水彙整" onClick="onchangeTab('海水彙整', 21)" class="btnInput">
+        <input type="button" value="工作日誌" onClick="onchangeTabfish('工作日誌', 22)" class="btnInput">
+    </div>
+    
+</div>
+   
 
     <div id="show"></div>
-
     <script>
         let val = '海水彙整'
-        //切換顯示ok 但無法寫入資料
-        function SendScore(formObj) {
-
-            let demand = document.getElementById("nameInput").value;
-            $.ajax({
-                url: "https://script.google.com/macros/s/AKfycbz8445lnhUYh4ACQoHBw9lZ0jAC_sUlTDU3bOcSXIEi2QuGwEg/exec",
-                data: {
-                    "name": name,
-                },
-                success: function (response) {
-                    if (response == "成功") {
-                        alert("成功");
-                    }
-                },
-            });
-        }
-        function aaa(values, index) {
+        function onchangeTab(values, index) {
             document.getElementById('show').innerHTML = '';
             val = values
             valJson = `https://spreadsheets.google.com/feeds/list/1HkDhsrUo4Duj3pK9uRyNiqDpDLpQvFdcdc4PteTetcU/${index}/public/values?alt=json-in-script&callback=?`
-
-
 
             $(function () {
                 var show = document.getElementById('show');
@@ -59,7 +97,129 @@
                     endRow: 31,
                     endCol: 3
                 };
+                // excel 要發布
+                $.getJSON(valJson, function (json) {
+                    console.log(json)
+                    var e = json.feed.entry,
+                        l = e.length,
+                        row1 = "",
+                        row2 = '',
+                        row3 = "",
+                        row4 = '',
+                        entry, i, data,
 
+                        //1-5
+                        idboxdolphin, boxdolphin,
+                        idshigougong, shigougong,
+                        idbothsexes, bothsexes,
+                        idbigflowerbranch, bigflowerbranch,
+                        idbarechested, barechested,
+
+                        //6-10
+                        idshrimp, shrimp,
+                        idhorseshoecrab, horseshoecrab,
+                        idgardeneel, gardeneel,
+                        idsoftware, software,
+                        ishardware, hardware,
+
+                        //11-15
+                        idgrouper, grouper,
+                        idsmallgloweringbranches, smallgloweringbranches,
+                        idhippocampus, hippocampus,
+                        ideyespotdoublesaw, eyespotdoublesaw,
+                        idplatinumjoker, platinumjoker,
+
+                        //16-20
+                        idpacificdoublesaw, pacificdoublesaw,
+                        idpicasso, picasso,
+                        idblueupsidedown, blueupsidedown,
+                        idangelfish, angelfish,
+                        idstingray, stingray;
+
+                    for (i = 0; i < l; i++) {
+                        entry = e[i];
+                        //1-5
+                        idboxdolphin = "<td class='td'>" + entry.gsx$idboxdolphin.$t + '</td>'; boxdolphin = '<td>' + entry.gsx$boxdolphin.$t + '</td>';
+                        idshigougong = "<td class='td'>" + entry.gsx$idshigougong.$t + '</td>'; shigougong = '<td>' + entry.gsx$shigougong.$t + '</td>';
+                        idbothsexes = "<td class='td'>" + entry.gsx$idbothsexes.$t + '</td>'; bothsexes = '<td>' + entry.gsx$bothsexes.$t + '</td>';
+                        idbigflowerbranch = "<td class='td'>" + entry.gsx$idbigflowerbranch.$t + '</td>'; bigflowerbranch = '<td>' + entry.gsx$bigflowerbranch.$t + '</td>';
+                        idbarechested = "<td class='td'>" + entry.gsx$idbarechested.$t + '</td>'; barechested = '<td>' + entry.gsx$barechested.$t + '</td>';
+                        //6-10
+                        idshrimp = "<td class='td'>" + entry.gsx$idshrimp.$t + '</td>'; shrimp = '<td>' + entry.gsx$shrimp.$t + '</td>';
+                        idhorseshoecrab = "<td class='td'>" + entry.gsx$idhorseshoecrab.$t + '</td>'; horseshoecrab = '<td>' + entry.gsx$horseshoecrab.$t + '</td>';
+                        idgardeneel = "<td class='td'>" + entry.gsx$idgardeneel.$t + '</td>'; gardeneel = '<td>' + entry.gsx$gardeneel.$t + '</td>';
+                        idsoftware = "<td class='td'>" + entry.gsx$idsoftware.$t + '</td>'; software = '<td>' + entry.gsx$software.$t + '</td>';
+                        ishardware = "<td class='td'>" + entry.gsx$ishardware.$t + '</td>'; hardware = '<td>' + entry.gsx$hardware.$t + '</td>';
+                        //11-15
+                        idgrouper = "<td class='td'>" + entry.gsx$idgrouper.$t + '</td>'; grouper = '<td>' + entry.gsx$grouper.$t + '</td>';
+                        idsmallgloweringbranches = "<td class='td'>" + entry.gsx$idsmallgloweringbranches.$t + '</td>'; smallgloweringbranches = '<td>' + entry.gsx$smallgloweringbranches.$t + '</td>';
+                        idhippocampus = "<td class='td'>" + entry.gsx$idhippocampus.$t + '</td>'; hippocampus = '<td>' + entry.gsx$hippocampus.$t + '</td>';
+                        ideyespotdoublesaw = "<td class='td'>" + entry.gsx$ideyespotdoublesaw.$t + '</td>'; eyespotdoublesaw = '<td>' + entry.gsx$eyespotdoublesaw.$t + '</td>';
+                        idplatinumjoker = "<td class='td'>" + entry.gsx$idplatinumjoker.$t + '</td>'; platinumjoker = '<td>' + entry.gsx$platinumjoker.$t + '</td>';
+                        //16-20
+                        idpacificdoublesaw = "<td class='td'>" + entry.gsx$idpacificdoublesaw.$t + '</td>'; pacificdoublesaw = '<td>' + entry.gsx$pacificdoublesaw.$t + '</td>';
+                        idpicasso = "<td class='td'>" + entry.gsx$idpicasso.$t + '</td>'; picasso = '<td>' + entry.gsx$picasso.$t + '</td>';
+                        idblueupsidedown = "<td class='td'>" + entry.gsx$idblueupsidedown.$t + '</td>'; blueupsidedown = '<td>' + entry.gsx$blueupsidedown.$t + '</td>';
+                        idangelfish = "<td class='td'>" + entry.gsx$idangelfish.$t + '</td>'; angelfish = '<td>' + entry.gsx$angelfish.$t + '</td>';
+                        idstingray = "<td class='td'>" + entry.gsx$idstingray.$t + '</td>'; stingray = '<td>' + entry.gsx$stingray.$t + '</td>';
+
+                        row1 += '<tr>' +
+                            //1-5
+                            idboxdolphin + boxdolphin +
+                            idshigougong + shigougong +
+                            idbothsexes + bothsexes +
+                            idbigflowerbranch + bigflowerbranch +
+                            idbarechested + barechested +
+                            '</tr>';
+
+                        row2 += '<tr>' +
+                            //6-10
+                            idshrimp + shrimp +
+                            idhorseshoecrab + horseshoecrab +
+                            idgardeneel + gardeneel +
+                            idsoftware + software +
+                            ishardware + hardware +
+                            '</tr>';
+
+                        row3 += '<tr>' +
+                            //11-15
+                            idgrouper + grouper +
+                            idsmallgloweringbranches + smallgloweringbranches +
+                            idhippocampus + hippocampus +
+                            ideyespotdoublesaw + eyespotdoublesaw +
+                            idplatinumjoker + platinumjoker +
+                            '</tr>';
+
+                        row4 += '<tr>' +
+                            //16-20
+                            idpacificdoublesaw + pacificdoublesaw +
+                            idpicasso + picasso +
+                            idblueupsidedown + blueupsidedown +
+                            idangelfish + angelfish +
+                            idstingray + stingray +
+                            '</tr>';
+
+                    }
+                    $("#show").html(`<table width="1024"> ${row1} </table><table width="1024"> ${row2} </table><table width="1024"> ${row3} </table><table width="1024"> ${row4} </table>`);
+
+                });
+            });
+        };
+        function onchangeTabfish(values, index) {
+            document.getElementById('show').innerHTML = '';
+            val = values
+            valJson = `https://spreadsheets.google.com/feeds/list/1HkDhsrUo4Duj3pK9uRyNiqDpDLpQvFdcdc4PteTetcU/${index}/public/values?alt=json-in-script&callback=?`
+
+            $(function () {
+                var show = document.getElementById('show');
+                var a = {
+                    sheetUrl: 'https://docs.google.com/spreadsheets/d/1HkDhsrUo4Duj3pK9uRyNiqDpDLpQvFdcdc4PteTetcU/edit#gid=0',
+                    sheetTag: val,
+                    row: 1,
+                    col: 1,
+                    endRow: 31,
+                    endCol: 3
+                };
                 // excel 要發布
                 $.getJSON(valJson, function (json) {
                     console.log(json)
@@ -67,42 +227,38 @@
                         l = e.length,
                         html = "",
                         // entry, i, authority, serial, name, sex, register;
-                        entry, i, data, idboxdolphin, boxdolphin,
-                        idshigougong, shigougong,
-                        idbothsexes, bothsexes,
-                        idbigflowerbranch, bigflowerbranch,
-                        idbarechested, barechested,
+                        entry, i, data, seawater, medication, morning, afternoon, nitrifying, soda, hydroxide, cylinderWall, outlet, proteinMachine, filterSponge, unusual, fish, suggestion, personnel;
 
-                        idshrimp, shrimp,
-                        idhorseshoecrab, horseshoecrab;
                     for (i = 0; i < l; i++) {
                         entry = e[i];
 
-                        idboxdolphin = "<td class='td'>" + entry.gsx$idboxdolphin.$t + '</td>'; boxdolphin = '<td>' + entry.gsx$boxdolphin.$t + '</td>';
-                        idshigougong = "<td class='td'>" + entry.gsx$idshigougong.$t + '</td>'; shigougong = '<td>' + entry.gsx$shigougong.$t + '</td>';
-                        idbothsexes = "<td class='td'>" + entry.gsx$idbothsexes.$t + '</td>'; bothsexes = '<td>' + entry.gsx$bothsexes.$t + '</td>';
-                        idbothsexes = "<td class='td'>" + entry.gsx$idbothsexes.$t + '</td>'; bothsexes = '<td>' + entry.gsx$bothsexes.$t + '</td>';
-                        idbigflowerbranch = "<td class='td'>" + entry.gsx$idbigflowerbranch.$t + '</td>'; bigflowerbranch = '<td>' + entry.gsx$bigflowerbranch.$t + '</td>';
+                        data = '<td>' + entry.gsx$data.$t + '</td>';
+                        seawater = '<td>' + entry.gsx$seawater.$t + '</td>';
+                        medication = '<td>' + entry.gsx$medication.$t + '</td>';
 
-                        idshrimp = "<td class='td'>" + entry.gsx$idshrimp.$t + '</td>'; shrimp = '<td>' + entry.gsx$shrimp.$t + '</td>';
-                        idhorseshoecrab = "<td class='td'>" + entry.gsx$idhorseshoecrab.$t + '</td>'; horseshoecrab = '<td>' + entry.gsx$horseshoecrab.$t + '</td>';
+                        morning = '<td>' + entry.gsx$morning.$t + '</td>';
+                        afternoon = '<td>' + entry.gsx$afternoon.$t + '</td>';
 
-                        html += '<tr>' + 
-                        idboxdolphin + boxdolphin +
-                        idshigougong + shigougong +
-                        idbothsexes + bothsexes +
-                        idbigflowerbranch + bigflowerbranch +
-                        idbarechested + barechested +
+                        nitrifying = '<td>' + entry.gsx$nitrifying.$t + '</td>';
+                        soda = '<td>' + entry.gsx$soda.$t + '</td>';
+                        hydroxide = '<td>' + entry.gsx$hydroxide.$t + '</td>';
 
-                        idshrimp + shrimp +
-                        idhorseshoecrab + horseshoecrab +
-                         '</tr>';
+                        cylinderwall = '<td>' + entry.gsx$cylinderwall.$t + '</td>';
+                        outlet = '<td>' + entry.gsx$outlet.$t + '</td>';
+                        proteinmachine = '<td>' + entry.gsx$proteinmachine.$t + '</td>';
+                        filtersponge = '<td>' + entry.gsx$filtersponge.$t + '</td>';
+
+                        unusual = '<td>' + entry.gsx$unusual.$t + '</td>';
+                        fish = '<td>' + entry.gsx$fish.$t + '</td>';
+                        suggestion = '<td>' + entry.gsx$suggestion.$t + '</td>';
+                        personnel = '<td>' + entry.gsx$personnel.$t + '</td>';
+
+                        html += '<tr>' + data + seawater + medication + fish + morning + afternoon + nitrifying + soda + hydroxide + cylinderwall + outlet + proteinmachine + filtersponge + unusual + suggestion + personnel + '</tr>';
 
                     }
-                    $("#show").html(`<table><tr><td colspan="16">${values}</td></tr> ${html} </table`);
+                    $("#show").html('<table><tr><td colspan="16">' + val + '</td></tr>' + html + '</table');
 
                 });
-
             });
         }
 
