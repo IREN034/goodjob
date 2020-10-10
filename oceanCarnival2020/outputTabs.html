@@ -26,12 +26,16 @@
             width: calc(100% / 3.5);
             margin: 5px;
         }
-        .slideMenus{
-            @media screen and (max-width:600px){
-                height: 55px;
+        @media screen and (max-width:600px){
+            .slideMenus{
+            height: 55px;
             overflow: hidden;
-            }
         }
+        }
+      .show{
+width: 100%;
+overflow: scroll;
+      }
         .slideMenu{
             display: flex;
             height: 70px;
@@ -79,7 +83,7 @@
 </div>
    
 
-    <div id="show"></div>
+    <div id="show" class="show"></div>
     <script>
         let val = '海水彙整'
         function onchangeTab(values, index) {
