@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        td{
+            background: #e5e5e5;
+        }
+        .td{
+            padding: 6px 10px;
+            background: #ffffff;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+
+<body>
+    <input type="button" value="海水彙整" onClick="aaa('海水彙整', 21)">
+    <!-- <input type="button" value="工作表2" onClick="aaa('工作表2', 2)"> -->
+
+
+    <div id="show"></div>
+
+    <script>
+        let val = '海水彙整'
+        //切換顯示ok 但無法寫入資料
+        function SendScore(formObj) {
+
+            let demand = document.getElementById("nameInput").value;
+            $.ajax({
+                url: "https://script.google.com/macros/s/AKfycbz8445lnhUYh4ACQoHBw9lZ0jAC_sUlTDU3bOcSXIEi2QuGwEg/exec",
+                data: {
+                    "name": name,
+                },
+                success: function (response) {
+                    if (response == "成功") {
+                        alert("成功");
+                    }
+                },
+            });
+        }
+        function aaa(values, index) {
+            document.getElementById('show').innerHTML = '';
+            val = values
+            valJson = `https://spreadsheets.google.com/feeds/list/1HkDhsrUo4Duj3pK9uRyNiqDpDLpQvFdcdc4PteTetcU/${index}/public/values?alt=json-in-script&callback=?`
+
+
+
+            $(function () {
+                var show = document.getElementById('show');
+                var a = {
+                    sheetUrl: 'https://docs.google.com/spreadsheets/d/1HkDhsrUo4Duj3pK9uRyNiqDpDLpQvFdcdc4PteTetcU/edit#gid=0',
+                    sheetTag: val,
+                    row: 1,
+                    col: 1,
+                    endRow: 31,
+                    endCol: 3
+                };
+
+                // excel 要發布
+                $.getJSON(valJson, function (json) {
+                    console.log(json)
+                    var e = json.feed.entry,
+                        l = e.length,
+                        html = "",
+                        // entry, i, authority, serial, name, sex, register;
+                        entry, i, data, idboxdolphin, boxdolphin,
+                        idshigougong, shigougong,
+                        idbothsexes, bothsexes,
+                        idbigflowerbranch, bigflowerbranch,
+                        idbarechested, barechested,
+
+                        idshrimp, shrimp,
+                        idhorseshoecrab, horseshoecrab;
+                    for (i = 0; i < l; i++) {
+                        entry = e[i];
+
+                        idboxdolphin = "<td class='td'>" + entry.gsx$idboxdolphin.$t + '</td>'; boxdolphin = '<td>' + entry.gsx$boxdolphin.$t + '</td>';
+                        idshigougong = "<td class='td'>" + entry.gsx$idshigougong.$t + '</td>'; shigougong = '<td>' + entry.gsx$shigougong.$t + '</td>';
+                        idbothsexes = "<td class='td'>" + entry.gsx$idbothsexes.$t + '</td>'; bothsexes = '<td>' + entry.gsx$bothsexes.$t + '</td>';
+                        idbothsexes = "<td class='td'>" + entry.gsx$idbothsexes.$t + '</td>'; bothsexes = '<td>' + entry.gsx$bothsexes.$t + '</td>';
+                        idbigflowerbranch = "<td class='td'>" + entry.gsx$idbigflowerbranch.$t + '</td>'; bigflowerbranch = '<td>' + entry.gsx$bigflowerbranch.$t + '</td>';
+
+                        idshrimp = "<td class='td'>" + entry.gsx$idshrimp.$t + '</td>'; shrimp = '<td>' + entry.gsx$shrimp.$t + '</td>';
+                        idhorseshoecrab = "<td class='td'>" + entry.gsx$idhorseshoecrab.$t + '</td>'; horseshoecrab = '<td>' + entry.gsx$horseshoecrab.$t + '</td>';
+
+                        html += '<tr>' + 
+                        idboxdolphin + boxdolphin +
+                        idshigougong + shigougong +
+                        idbothsexes + bothsexes +
+                        idbigflowerbranch + bigflowerbranch +
+                        idbarechested + barechested +
+
+                        idshrimp + shrimp +
+                        idhorseshoecrab + horseshoecrab +
+                         '</tr>';
+
+                    }
+                    $("#show").html(`<table><tr><td colspan="16">${values}</td></tr> ${html} </table`);
+
+                });
+
+            });
+        }
+
+    </script>
+</body>
+
+</html>
