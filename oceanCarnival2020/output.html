@@ -3,6 +3,10 @@
 
 <head>
     <style>
+        body {
+            margin: 0;
+        }
+
         table {
             width: 1024px;
             border: 1px solid #ccc;
@@ -21,16 +25,23 @@
         td {
             padding: 5px;
             font-size: 14px;
+            white-space: pre;
+            /* pre 只有</br>才能導致換行 */
         }
 
         .btnInput {
-            width: calc(100% / 3.5);
-            margin: 5px;
+            width: calc(100% / 2.5);
+            height: 40px;
+            line-height: 38px;
+            margin: 5px 2px;
+            border: 0;
+            outline: none;
+            background: #fff;
         }
 
         @media screen and (max-width:600px) {
             .slideMenus {
-                height: 55px;
+                height: 40px;
                 overflow: hidden;
             }
         }
@@ -42,8 +53,9 @@
 
         .slideMenu {
             display: flex;
-            height: 70px;
-            overflow-y: auto;
+            height: 60px;
+            overflow-x: auto;
+            background: #03a9f4;
         }
     </style>
     <meta charset="utf-8">
@@ -56,7 +68,7 @@
     <div class="slideMenus">
         <div class="slideMenu">
             <input type="button" value="1號箱豚缸" onClick="onchangeTabfish('1號箱豚缸', 1)" class="btnInput">
-            <input type="button" value="2號石狗公" onClick="onchangeTabfish('2號石狗公', 2" class="btnInput">
+            <input type="button" value="2號石狗公" onClick="onchangeTabfish('2號石狗公', 2)" class="btnInput">
             <input type="button" value="3號兩性缸" onClick="onchangeTabfish('3號兩性缸', 3)" class="btnInput">
             <input type="button" value="4號大花枝" onClick="onchangeTabfish('4號大花枝', 4)" class="btnInput">
             <input type="button" value="5號裸胸鯙" onClick="onchangeTabfish('5號裸胸鯙', 5)" class="btnInput">
@@ -89,7 +101,7 @@
 
     <div id="show" class="show"></div>
     <script>
-        let val = '海水彙整'
+        // let val = '海水彙整'
         function onchangeTab(values, index) {
             document.getElementById('show').innerHTML = '';
             val = values
